@@ -2,8 +2,9 @@ import librosa
 import librosa.filters
 import math
 import numpy as np
+import tensorflow as tf
 import scipy
-from hparams import hparams
+from hparams_new import hparams
 
 
 def load_wav(path):
