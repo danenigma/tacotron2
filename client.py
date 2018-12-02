@@ -59,6 +59,24 @@ class VersionAction(argparse.Action):
     def __call__(self, *args, **kwargs):
         printVersions()
         exit(0)
+        
+def predict(model, alphabet, lm, trie, audio):
+    ds = Model(args.model, N_FEATURES, N_CONTEXT, args.alphabet, BEAM_WIDTH)
+	ds.enableDecoderWithLM(alphabet, lm, trie, LM_WEIGHT,
+		                   VALID_WORD_COUNT_WEIGHT)
+    fin = wave.open(audio, 'rb')
+    fs = fin.getframerate()
+    if fs != 16000:
+        print('Warning: original sample rate ({}) is different than 16kHz. Resampling might produce erratic speech recognition.'.format(fs), file=sys.stderr)
+        fs, audio = convert_samplerate(audio)
+    else:
+        audio = np.frombuffer(fin.readframes(fin.getnframes()), np.int16)
+
+    audio_length = fin.getnframes() * (1/16000)
+    fin.close()
+    text = ds.stt(audio, fs)
+    print(text)
+    return text
 
 def main():
     parser = argparse.ArgumentParser(description='Running DeepSpeech inference.')
