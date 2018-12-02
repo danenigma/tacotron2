@@ -16,4 +16,4 @@ for idx, audio in enumerate(audio_files):
 	writer = csv.writer(f)
 	writer.writerow([str(idx), text])
 	print('Done convering audio :', idx)
-	
+	if idx == 100: break	
