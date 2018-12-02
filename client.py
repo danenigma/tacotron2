@@ -61,7 +61,7 @@ class VersionAction(argparse.Action):
         exit(0)
         
 def predict(model, alphabet, lm, trie, audio):
-	ds = Model(args.model, N_FEATURES, N_CONTEXT, args.alphabet, BEAM_WIDTH)
+	ds = Model(model, N_FEATURES, N_CONTEXT, alphabet, BEAM_WIDTH)
 	ds.enableDecoderWithLM(alphabet, lm, trie, LM_WEIGHT,
 			               VALID_WORD_COUNT_WEIGHT)
 	fin = wave.open(audio, 'rb')
