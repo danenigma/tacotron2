@@ -14,6 +14,6 @@ f = open('result.csv', 'w')
 for idx, audio in enumerate(audio_files):
 	text   = predict(model, alphabet, lm, trie, os.path.join(audio_dir, audio))
 	writer = csv.writer(f)
-	writer.writerow([str(idx), text])
+	writer.writerow([audio, text])
 	print('Done convering audio :', idx)
 	if idx == 100: break	
